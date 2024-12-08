@@ -41,11 +41,11 @@ submit.onclick = function () {
     category: category.value,
   };
   datapro.push(newpro);
+  // save localstorage
   localStorage.setItem("product", JSON.stringify(datapro));
   console.log(newpro);
 };
 
-// save localstorage
 // clear inputs
 // read
 // count
