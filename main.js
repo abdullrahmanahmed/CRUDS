@@ -22,6 +22,12 @@ function getTotal() {
 }
 
 // create product
+
+
+
+
+
+
 // save localstorage
 // clear inputs
 // read
