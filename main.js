@@ -47,6 +47,7 @@ submit.onclick = function () {
 };
 
 // clear inputs
+
 // read
 // count
 // delete
