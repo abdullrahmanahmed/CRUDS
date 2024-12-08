@@ -42,12 +42,25 @@ submit.onclick = function () {
   };
   datapro.push(newpro);
   // save localstorage
+
   localStorage.setItem("product", JSON.stringify(datapro));
-  console.log(newpro);
+
+  //  create function clear data
+
+  cleardata();
 };
 
 // clear inputs
-
+function cleardata() {
+  title.value = "";
+  price.value = "";
+  taxes.value = "";
+  ads.value = "";
+  discount.value = "";
+  total.innerHTML = "";
+  count.value = "";
+  category.value = "";
+}
 // read
 // count
 // delete
