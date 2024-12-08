@@ -22,11 +22,28 @@ function getTotal() {
 }
 
 // create product
+let datapro;
+if (localStorage.product != null) {
+  datapro = JSON.parse(localStorage.product);
+} else {
+  datapro = [];
+}
 
-
-
-
-
+submit.onclick = function () {
+  let newpro = {
+    title: title.value,
+    price: price.value,
+    taxes: taxes.value,
+    ads: ads.value,
+    discount: discount.value,
+    total: total.innerHTML,
+    count: count.value,
+    category: category.value,
+  };
+  datapro.push(newpro);
+  localStorage.setItem("product", JSON.stringify(datapro));
+  console.log(newpro);
+};
 
 // save localstorage
 // clear inputs
