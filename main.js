@@ -48,6 +48,9 @@ submit.onclick = function () {
   //  create function clear data
 
   cleardata();
+
+  // read data
+  showdata();
 };
 
 // clear inputs
@@ -63,6 +66,27 @@ function cleardata() {
 }
 
 // read
+function showdata() {
+  let table = "";
+  for (let i = 1; i < datapro.length; i++) {
+    table += `
+                <tr>
+              <td>${i}</td>
+              <td>${datapro[i].title}</td>
+              <td>${datapro[i].price}</td>
+              <td>${datapro[i].taxes}</td>
+              <td>${datapro[i].ads}</td>
+              <td>${datapro[i].discount}</td>
+              <td>${datapro[i].total}</td>
+              <td>${datapro[i].category}</td>
+              <td><button id="update">update</button></td>
+              <td><button id="delete">delete</button></td>
+            </tr>`;
+  }
+  document.getElementById("tbody").innerHTML = table;
+}
+showdata();
+// finish read data
 
 // count
 // delete
