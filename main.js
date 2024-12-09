@@ -80,7 +80,7 @@ function showdata() {
               <td>${datapro[i].total}</td>
               <td>${datapro[i].category}</td>
               <td><button id="update">update</button></td>
-              <td><button id="delete">delete</button></td>
+              <td><button onclick ="deletedata(${i})" id="delete">delete</button></td>
             </tr>`;
   }
   document.getElementById("tbody").innerHTML = table;
@@ -88,8 +88,13 @@ function showdata() {
 showdata();
 // finish read data
 
-// delete 
-
+// delete
+function deletedata(i) {
+  datapro.splice(i, 1);
+  localStorage.product = JSON.stringify(datapro);
+  showdata();
+  // finish delete  data
+}
 // count
 // update
 // search
