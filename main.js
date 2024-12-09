@@ -84,6 +84,14 @@ function showdata() {
             </tr>`;
   }
   document.getElementById("tbody").innerHTML = table;
+  let btndelete = document.getElementById("deleteall");
+  if (datapro.length > 0) {
+    btndelete.innerHTML = `
+      <button onclick ="deleteall()">Delete All</button>
+    `;
+  } else {
+    btndelete.innerHTML = "";
+  }
 }
 showdata();
 // finish read data
@@ -94,6 +102,12 @@ function deletedata(i) {
   localStorage.product = JSON.stringify(datapro);
   showdata();
   // finish delete  data
+}
+
+function deleteall(){
+  localStorage.clear()
+  datapro.splice(0)
+  showdata()
 }
 // count
 // update
