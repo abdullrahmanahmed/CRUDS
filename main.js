@@ -88,8 +88,9 @@ function showdata() {
 showdata();
 // finish read data
 
+// delete 
+
 // count
-// delete
 // update
 // search
 // clean data
