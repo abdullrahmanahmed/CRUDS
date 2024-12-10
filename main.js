@@ -40,7 +40,15 @@ submit.onclick = function () {
     count: count.value,
     category: category.value,
   };
-  datapro.push(newpro);
+  // create count
+  if (newpro.count > 1) {
+    for (let i = 0; i < newpro.count; i++) {
+      datapro.push(newpro);
+    }
+  } else {
+    datapro.push(newpro);
+  }
+
   // save localstorage
 
   localStorage.setItem("product", JSON.stringify(datapro));
@@ -87,7 +95,7 @@ function showdata() {
   let btndelete = document.getElementById("deleteall");
   if (datapro.length > 0) {
     btndelete.innerHTML = `
-      <button onclick ="deleteall()">Delete All</button>
+      <button onclick ="deleteall()">Delete All (${datapro.length})</button>
     `;
   } else {
     btndelete.innerHTML = "";
@@ -104,10 +112,10 @@ function deletedata(i) {
   // finish delete  data
 }
 
-function deleteall(){
-  localStorage.clear()
-  datapro.splice(0)
-  showdata()
+function deleteall() {
+  localStorage.clear();
+  datapro.splice(0);
+  showdata();
 }
 
 // count
