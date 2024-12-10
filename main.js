@@ -119,8 +119,6 @@ function deleteall() {
   showdata();
 }
 
-// count
-
 // update
 // search
 // clean data
