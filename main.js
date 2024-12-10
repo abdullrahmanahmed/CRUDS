@@ -48,6 +48,7 @@ submit.onclick = function () {
   } else {
     datapro.push(newpro);
   }
+  // finish count
 
   // save localstorage
 
