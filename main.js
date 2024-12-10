@@ -109,7 +109,9 @@ function deleteall(){
   datapro.splice(0)
   showdata()
 }
+
 // count
+
 // update
 // search
 // clean data
