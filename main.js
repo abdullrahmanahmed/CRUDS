@@ -8,6 +8,9 @@ let total = document.getElementById("total");
 let count = document.getElementById("count");
 let category = document.getElementById("category");
 let submit = document.getElementById("submit");
+let search = document.getElementById("search");
+let searchTitleButton = document.getElementById("searchtitle");
+let searchCategoryButton = document.getElementById("searchcategory");
 
 // Initial mood is set to "create data" mode, indicating it's creating a new product
 let mood = "createdata";
@@ -18,9 +21,7 @@ let datapro = JSON.parse(localStorage.getItem("product")) || [];
 
 // Function to calculate and display the total price of the product
 function getTotal() {
-  // Check if all necessary input fields are filled
   if (price.value !== "" && taxes.value !== "" && ads.value !== "" && discount.value !== "") {
-    // Calculate the total: price + taxes + ads - discount
     let result = (+price.value + +taxes.value + +ads.value - +discount.value).toFixed(2);
     total.innerHTML = result; // Display the result in the total field
     total.style.background = "#040"; // Green background to indicate success
@@ -32,7 +33,6 @@ function getTotal() {
 
 // Event listener for the submit button
 submit.onclick = function () {
-  // Create a new product object with all the form data
   let newpro = {
     title: title.value,
     price: price.value,
@@ -44,9 +44,7 @@ submit.onclick = function () {
     category: category.value,
   };
 
-  // If mood is "create", we add the product to the list
   if (mood === "createdata") {
-    // If the count is greater than 1, we push multiple instances of the product
     if (newpro.count > 1) {
       for (let i = 0; i < newpro.count; i++) {
         datapro.push({...newpro}); // Push a copy of the product to avoid reference issues
@@ -55,21 +53,15 @@ submit.onclick = function () {
       datapro.push(newpro); // Otherwise, just add one product
     }
   } else {
-    // If in "update" mode, update the existing product at the specific index (tmp)
     datapro[tmp] = newpro;
     mood = "createdata"; // Reset mood back to "create"
     submit.innerHTML = "Create"; // Change button text back to "Create"
     count.style.display = "block"; // Show the count input field again
   }
 
-  // Save the updated product list to localStorage
-  localStorage.setItem("product", JSON.stringify(datapro));
-
-  // Clear the input fields after submission
-  cleardata();
-
-  // Refresh the data display
-  showdata();
+  localStorage.setItem("product", JSON.stringify(datapro)); // Save the updated list
+  cleardata(); // Clear input fields
+  showdata(); // Refresh the data display
 };
 
 // Function to clear the input fields
@@ -87,9 +79,9 @@ function cleardata() {
 // Function to display the product list in the table
 function showdata() {
   getTotal(); // Recalculate the total to ensure the correct value is shown
-  let table = ""; // Initialize an empty string to build the table rows
+  let table = "";
 
-  // Loop through each product in the datapro array
+  // Loop through each product and add it to the table
   for (let i = 0; i < datapro.length; i++) {
     table += `
       <tr>
@@ -107,10 +99,8 @@ function showdata() {
     `;
   }
 
-  // Insert the generated table into the tbody element
-  document.getElementById("tbody").innerHTML = table;
+  document.getElementById("tbody").innerHTML = table; // Update the table with all data
 
-  // Update the delete all button visibility based on the number of products
   let btndelete = document.getElementById("deleteall");
   if (datapro.length > 0) {
     btndelete.innerHTML = `<button onclick="deleteall()">Delete All (${datapro.length})</button>`;
@@ -135,7 +125,6 @@ function deleteall() {
 
 // Function to update a product's details
 function updatedata(i) {
-  // Pre-fill the input fields with the product data at index i
   title.value = datapro[i].title;
   price.value = datapro[i].price;
   taxes.value = datapro[i].taxes;
@@ -148,6 +137,42 @@ function updatedata(i) {
   mood = "updatedata"; // Change mode to "update"
   tmp = i; // Save the index for later reference
   window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scroll to the top of the page
+}
+
+// Event listener for search by title
+searchTitleButton.addEventListener("click", function() {
+  let query = search.value.toLowerCase();
+  let filteredData = datapro.filter(product => product.title.toLowerCase().includes(query));
+  displayFilteredData(filteredData);
+});
+
+// Event listener for search by category
+searchCategoryButton.addEventListener("click", function() {
+  let query = search.value.toLowerCase();
+  let filteredData = datapro.filter(product => product.category.toLowerCase().includes(query));
+  displayFilteredData(filteredData);
+});
+
+// Function to display filtered data
+function displayFilteredData(filteredData) {
+  let table = "";
+  for (let i = 0; i < filteredData.length; i++) {
+    table += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${filteredData[i].title}</td>
+        <td>${filteredData[i].price}</td>
+        <td>${filteredData[i].taxes}</td>
+        <td>${filteredData[i].ads}</td>
+        <td>${filteredData[i].discount}</td>
+        <td>${filteredData[i].total}</td>
+        <td>${filteredData[i].category}</td>
+        <td><button onclick="updatedata(${i})">Update</button></td>
+        <td><button onclick="deletedata(${i})">Delete</button></td>
+      </tr>
+    `;
+  }
+  document.getElementById("tbody").innerHTML = table; // Update the table with filtered data
 }
 
 // Call the showdata function on page load to display stored products
